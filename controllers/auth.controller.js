@@ -36,11 +36,15 @@ const register = asyncHandler(async (req, res) => {
 const login = asyncHandler(async (req, res) => {
     const { error } = validateLoginUser(req.body)
     if (error) return res.status(400).json({ message: error.details[0].message });
+
     let user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).json({ message: "Invalid email or password" })
+
     const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
     if (!isPasswordMatch) return res.status(400).json({ message: "Invalid email or password" });
+
     const token = jwt.sign({ id: user._id, username: user.username }, "secretKey", { expiresIn: '1d' });
+
     const { password, ...other } = user._doc;
     res.status(200).json({ ...other, token })
 });
