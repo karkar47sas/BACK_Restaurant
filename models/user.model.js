@@ -25,8 +25,8 @@ const userSchema = new mongoose.Schema({
     },
     typeUser: {
         type: String,
-        required: true,
-        enum: ["Administrateur", "Cuisinier", "Client"]
+        enum: ["Administrateur", "Cuisinier", "Client"],
+        required: true
     },
     password: {
         type: String,

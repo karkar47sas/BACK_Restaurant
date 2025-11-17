@@ -10,10 +10,11 @@ function validateLoginUser(obj){
 
 function validateRegisterUser(obj){
     const schema=Joi.object({
-        username:Joi.string().trim(),
+        username:Joi.string().trim().required(),
         email:Joi.string().trim().min(5).max(100).required(),
         numCDI:Joi.string().trim().min(5).max(100).required(),
-        typeUser:Joi.string().valid("Administrateur","Cuisinier","Client"),
+        typeUser:Joi.string().valid("Administrateur","Cuisinier","Client").required(),
+        typeUser:Joi.string().required(),
         password:Joi.string().trim().min(6).required(),
     })
     return schema.validate(obj);
